@@ -125,14 +125,34 @@ def find_best_frame(source, driving, cpu):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--config", required=True, help="path to config")
-    parser.add_argument("--checkpoint", default='checkpoints/vox.pth.tar', help="path to checkpoint to restore")
+    parser.add_argument("--config", default='./config/vox-256.yaml', help="path to config")
+    parser.add_argument("--checkpoint", default='./checkpoints/vox.pth.tar', help="path to checkpoint to restore")
 
-    parser.add_argument("--source_image", default='./assets/source.png', help="path to source image")
-    parser.add_argument("--driving_video", default='./assets/driving.mp4', help="path to driving video")
-    parser.add_argument("--result_video", default='./result.mp4', help="path to output")
+    # parser.add_argument("--source_image", default='./assets/source.png', help="path to source image")
+    # parser.add_argument("--driving_video", default='./assets/driving.mp4', help="path to driving video")
+    # parser.add_argument("--result_video", default='./result.mp4', help="path to output")
+
+    # parser.add_argument("--source_image", default='./materials/1.png', help="path to source image")
+    # parser.add_argument("--driving_video", default='./materials/drive-02-done.mp4', help="path to driving video")
+    # parser.add_argument("--result_video", default='./materials/1-drive-02.mp4', help="path to output")
+
+    # parser.add_argument("--source_image", default='./materials/2.png', help="path to source image")
+    # parser.add_argument("--driving_video", default='./materials/drive-02-done.mp4', help="path to driving video")
+    # parser.add_argument("--result_video", default='./materials/2-drive-02.mp4', help="path to output")
+
+    # parser.add_argument("--source_image", default='./materials/3.png', help="path to source image")
+    # parser.add_argument("--driving_video", default='./materials/drive-02-done.mp4', help="path to driving video")
+    # parser.add_argument("--result_video", default='./materials/3-drive-02.mp4', help="path to output")
+
+    # parser.add_argument("--source_image", default='./materials/4.png', help="path to source image")
+    # parser.add_argument("--driving_video", default='./materials/drive-02-done.mp4', help="path to driving video")
+    # parser.add_argument("--result_video", default='./materials/4-drive-02.mp4', help="path to output")
+
+    parser.add_argument("--source_image", default='./materials/5.png', help="path to source image")
+    parser.add_argument("--driving_video", default='./materials/drive-02-done.mp4', help="path to driving video")
+    parser.add_argument("--result_video", default='./materials/5-drive-02.mp4', help="path to output")
     
-    parser.add_argument("--img_shape", default="256,256", type=lambda x: list(map(int, x.split(','))),
+    parser.add_argument("--img_shape", default="512,512", type=lambda x: list(map(int, x.split(','))),
                         help='Shape of image, that the model was trained on.')
     
     parser.add_argument("--mode", default='relative', choices=['standard', 'relative', 'avd'], help="Animate mode: ['standard', 'relative', 'avd'], when use the relative mode to animate a face, use '--find_best_frame' can get better quality result")

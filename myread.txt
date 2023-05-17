@@ -1,0 +1,50 @@
+# create conda env for this project
+conda create --name thinplate python=3.9
+
+# install all requirements
+pip install -r requirements.txt
+
+#error for ERROR: Could not find a version that satisfies the requirement torch==1.10.0+cu113 (from versions: 1.7.1, 1.8.0, 1.8.1, 1.9.0, 1.9.1, 1.10.0, 1.10.1, 1.10.2, 1.11.0, 1.12.0, 1.12.1, 1.
+13.0, 1.13.1, 2.0.0, 2.0.1)
+ERROR: No matching distribution found for torch==1.10.0+cu113
+
+# install torch 1.10.0 manually
+pip install torch==1.10.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
+pip install torchvision==0.11.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
+
+# check version
+python version.py
+
+# download checkpoints
+!wget -c https://cloud.tsinghua.edu.cn/f/da8d61d012014b12a9e4/?dl=1 -O checkpoints/vox.pth.tar
+#!wget -c https://cloud.tsinghua.edu.cn/f/483ef53650b14ac7ae70/?dl=1 -O checkpoints/ted.pth.tar
+#!wget -c https://cloud.tsinghua.edu.cn/f/9ec01fa4aaef423c8c02/?dl=1 -O checkpoints/taichi.pth.tar
+#!wget -c https://cloud.tsinghua.edu.cn/f/cd411b334a2e49cdb1e2/?dl=1 -O checkpoints/mgif.pth.tar
+
+# change demo.py  add_argument (source_image,driving_video,img_shape)
+# run python demo.py --config ./config/vox-256.yaml
+
+install ffmpeg
+https://ffmpeg.org/download.html#build-windows -> https://github.com/GyanD/codexffmpeg/releases/tag/2023-05-15-git-2953ebe7b6
+download and extract, config path with ffmpeg bin
+
+command:
+cut the time: ffmpeg -i [source.mp4] -ss [00:01:15(start time)] -t [00:00:20(time length)] [dest.mp4]
+change fps: ffmpeg -i [source.mp4] -r [30(fps)] [dest.mp4]
+resize: ffmpeg -i [source.mp4] -vf "scale=1080:1920" [dest.mp4]
+corp: ffmpeg -i  [source.mp4] -vf "crop=width:height:left:top" [dest.mp4]
+
+process drive
+ffmpeg -i ./drive-02.mp4 -ss 00:01:20 -t 00:00:30 ./drive-02-cut-30.mp4
+ffmpeg -i ./drive-02-cut-30.mp4 -r 25 ./drive-02-cut-30-r-25.mp4
+ffmpeg -i ./drive-02-cut-30-r-25.mp4 -vf "scale=1080:1920" ./drive-02-cut-30-r-25-1080x1920.mp4
+ffmpeg -i ./drive-02-cut-30-r-25-1080x1920.mp4 -vf "crop=512:512:270:360" ./drive-02-done.mp4
+py demo.py
+ffmpeg -i ./1-drive-02.mp4 -vf "crop=350:350:75:70" ./1-drive-02-done.mp4
+ffmpeg -i ./4-drive-02.mp4 -vf "crop=330:330:75:70" ./4-drive-02-done.mp4
+
+
+# not to do
+# download cuda 11.3
+# https://developer.nvidia.com/cuda-11.3.0-download-archive?target_os=Windows&target_arch=x86_64&target_version=10&target_type=exe_local
+# reconfig cuda_path for path
